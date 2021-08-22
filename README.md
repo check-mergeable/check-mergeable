@@ -39,6 +39,11 @@ This app is running on [vercel](https://vercel.com/) using [Serverless Functions
 
 You'll be able to find the values in [check-mergeable app settings](https://github.com/organizations/pocketlesson/settings/apps/check-mergeable). (PocketLesson members only!)
 
+### Useful Resources
+
+* [Probot](https://probot.github.io/)
+* [Probot - Deployment to Vercel](https://probot.github.io/docs/deployment/#vercel)
+
 ## License
 
 check-mergeable is under ISC license. See the [LICENSE](LICENSE) file for more info.
