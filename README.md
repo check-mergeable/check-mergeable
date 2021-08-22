@@ -1,33 +1,5 @@
-# mergeable
+# Check Mergeable
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
+Can I merge this PR?
 
-## Setup
-
-```sh
-# Install dependencies
-npm install
-
-# Run the bot
-npm start
-```
-
-## Docker
-
-```sh
-# 1. Build container
-docker build -t mergeable .
-
-# 2. Start container
-docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> mergeable
-```
-
-## Contributing
-
-If you have suggestions for how mergeable could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
-
-For more, check out the [Contributing Guide](CONTRIBUTING.md).
-
-## License
-
-[ISC](LICENSE) © 2021 Suyeol Jeon <devxoul@gmail.com>
+<img width="848" alt="check-mergeable" src="https://user-images.githubusercontent.com/931655/130352711-c11d7836-110c-47f1-941e-d1eddb03bd0e.png">

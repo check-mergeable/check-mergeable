@@ -1,11 +1,11 @@
 {
-  "name": "mergeable",
+  "name": "check-mergeable",
   "version": "1.0.0",
   "private": true,
   "description": "A Probot app",
   "author": "Suyeol Jeon <devxoul@gmail.com>",
   "license": "ISC",
-  "homepage": "https://github.com/devxoul/mergeable",
+  "homepage": "https://github.com/pocketlesson/check-mergeable",
   "keywords": [
     "probot",
     "github",
