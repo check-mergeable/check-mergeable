@@ -43,6 +43,7 @@ You'll be able to find the values in [check-mergeable app settings](https://gith
 
 * [Probot](https://probot.github.io/)
 * [Probot - Deployment to Vercel](https://probot.github.io/docs/deployment/#vercel)
+* [check-mergeable-playground](https://github.com/pocketlesson/check-mergeable-playground)
 
 ## License
 
