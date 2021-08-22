@@ -1,6 +1,6 @@
 # Check Mergeable
 
-Prevent from accidentally merging a pull request which depdends on another pull request.
+Prevent from accidentally merging a pull request which depends on another pull request.
 
 ## Features
 
