@@ -3,7 +3,7 @@ module.exports = (app) => {
     'pull_request.opened',
     'pull_request.edited',
     'pull_request.synchronize',
-  ], (context) => {
+  ], async (context) => {
     const octokit = context.octokit
     const logger = app.log
     logger.info(`Got an event: ${context.name}.`)
@@ -15,8 +15,10 @@ module.exports = (app) => {
     const pullRequest = context.payload.pull_request
     const isMergeable = getMergeable({ logger, pullRequest })
 
-    updateStatus({ octokit, logger, repository, pullRequest, isMergeable })
-    updateLabel({ octokit, logger, repository, pullRequest, isMergeable })
+    await Promise.all([
+      updateStatus({ octokit, logger, repository, pullRequest, isMergeable }),
+      updateLabel({ octokit, logger, repository, pullRequest, isMergeable }),
+    ])
   })
 }
 
@@ -34,10 +36,10 @@ const getMergeable = ({ logger, pullRequest }) => {
   return isMergeable
 }
 
-const updateStatus = ({ octokit, logger, repository, pullRequest, isMergeable }) => {
+const updateStatus = async ({ octokit, logger, repository, pullRequest, isMergeable }) => {
   logger.info(`Updating status.`)
-  octokit
-    .request('POST /repos/:owner/:repo/statuses/:sha', {
+  try {
+    await octokit.request('POST /repos/:owner/:repo/statuses/:sha', {
       ...repository,
       sha: pullRequest.head.sha,
       target_url: `https://github.com/${repository.owner}/${repository.repo}`,
@@ -45,20 +47,22 @@ const updateStatus = ({ octokit, logger, repository, pullRequest, isMergeable })
       description: isMergeable ? 'Let\'s go!' : 'Wait...',
       state: isMergeable ? 'success' : 'pending',
     })
-    .then(() => logger.info(`Updated status.`))
-    .catch(error => logger.error(`Failed to update status. ${error}`))
-}
-
-const updateLabel = ({ isMergeable, ...params }) => {
-  const label = 'status: dependent'
-  if (!isMergeable) {
-    addLabel({ ...params, label })
-  } else {
-    removeLabel({ ...params, label })
+    logger.info(`Updated status.`)
+  } catch (error) {
+    logger.error(`Failed to update status. ${error}`)
   }
 }
 
-const addLabel = ({ octokit, logger, repository, pullRequest, label }) => {
+const updateLabel = async ({ isMergeable, ...params }) => {
+  const label = 'status: dependent'
+  if (!isMergeable) {
+    await addLabel({ ...params, label })
+  } else {
+    await removeLabel({ ...params, label })
+  }
+}
+
+const addLabel = async ({ octokit, logger, repository, pullRequest, label }) => {
   logger.info(`Adding label.`)
 
   const exists = pullRequest.labels.find(x => x.name === label)
@@ -67,25 +71,28 @@ const addLabel = ({ octokit, logger, repository, pullRequest, label }) => {
     return
   }
 
-  octokit.issues
-    .addLabels({
+  try {
+    await octokit.issues.addLabels({
       ...repository,
       issue_number: pullRequest.number,
       labels: [label],
     })
-    .then(() => logger.info(`Added label.`))
-    .catch(error => logger.error(`Failed to add label. ${error}`))
+    logger.info(`Added label.`)
+  } catch (error) {
+    logger.error(`Failed to add label. ${error}`)
+  }
 }
 
-const removeLabel = ({ octokit, logger, repository, pullRequest, label }) => {
+const removeLabel = async ({ octokit, logger, repository, pullRequest, label }) => {
   logger.info(`Removing label.`)
-
-  octokit.issues
-    .removeLabel({
+  try {
+    await octokit.issues.removeLabel({
       ...repository,
       issue_number: pullRequest.number,
       name: label,
     })
-    .then(() => logger.info(`Removed label.`))
-    .catch(error => logger.error(`Failed to remove label. ${error}`))
+    logger.info(`Removed label.`)
+  } catch (error) {
+    logger.error(`Failed to remove label. ${error}`)
+  }
 }
