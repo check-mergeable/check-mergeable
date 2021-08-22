@@ -28,6 +28,7 @@ const getMergeable = ({ logger, pullRequest }) => {
 
   const isMergeable = (
     targetBranch === 'main' ||
+    targetBranch === 'develop' ||
     targetBranch.startsWith('release/') ||
     targetBranch.startsWith('hotfix/')
   )
