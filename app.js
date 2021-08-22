@@ -6,7 +6,7 @@ module.exports = (app) => {
   ], async (context) => {
     const octokit = context.octokit
     const logger = app.log
-    logger.info(`Got an event: ${context.name}.`)
+    logger.info(`Got an event '${context.name}' from '${context.payload.repository.owner.login}/${context.payload.repository.name}'.`)
 
     const repository = {
       owner: context.payload.repository.owner.login,
@@ -37,7 +37,9 @@ const getMergeable = ({ logger, pullRequest }) => {
 }
 
 const updateStatus = async ({ octokit, logger, repository, pullRequest, isMergeable }) => {
-  logger.info(`Updating status.`)
+  const state = isMergeable ? 'success' : 'pending'
+  logger.info(`Updating status to '${state}'.`)
+
   try {
     await octokit.request('POST /repos/:owner/:repo/statuses/:sha', {
       ...repository,
@@ -45,7 +47,7 @@ const updateStatus = async ({ octokit, logger, repository, pullRequest, isMergea
       target_url: `https://github.com/${repository.owner}/${repository.repo}`,
       context: 'Can I merge this PR?',
       description: isMergeable ? 'Let\'s go!' : 'Wait...',
-      state: isMergeable ? 'success' : 'pending',
+      state,
     })
     logger.info(`Updated status.`)
   } catch (error) {
@@ -63,11 +65,11 @@ const updateLabel = async ({ isMergeable, ...params }) => {
 }
 
 const addLabel = async ({ octokit, logger, repository, pullRequest, label }) => {
-  logger.info(`Adding label.`)
+  logger.info(`Adding label '${label}'.`)
 
   const exists = pullRequest.labels.find(x => x.name === label)
   if (exists) {
-    logger.info('Label already exists. Skip.')
+    logger.info(`Label '${label}' already exists. Skip.`)
     return
   }
 
@@ -84,7 +86,7 @@ const addLabel = async ({ octokit, logger, repository, pullRequest, label }) => 
 }
 
 const removeLabel = async ({ octokit, logger, repository, pullRequest, label }) => {
-  logger.info(`Removing label.`)
+  logger.info(`Removing label '${label}'.`)
   try {
     await octokit.issues.removeLabel({
       ...repository,
