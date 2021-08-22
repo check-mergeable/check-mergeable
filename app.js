@@ -45,7 +45,6 @@ const updateStatus = async ({ octokit, logger, repository, pullRequest, isMergea
     await octokit.request('POST /repos/:owner/:repo/statuses/:sha', {
       ...repository,
       sha: pullRequest.head.sha,
-      target_url: `https://github.com/${repository.owner}/${repository.repo}`,
       context: 'Can I merge this PR?',
       description: isMergeable ? 'Let\'s go!' : 'Wait...',
       state,
