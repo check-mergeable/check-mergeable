@@ -22,7 +22,7 @@ Go to the [app page](https://github.com/apps/check-mergeable) and install the ap
 
 This app is not currently configurable. The values are hardcoded:
 
-* Target branch allowlist: `main`, `develop`, `release/`, `hotfix/`
+* Target branch allowlist: `main`, `develop`, `release/*`, `hotfix/*`
 * Custom labels: `status: dependent`
 
 ## Development
