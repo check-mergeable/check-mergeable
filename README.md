@@ -4,13 +4,13 @@ Prevent from accidentally merging a pull request which depends on another pull r
 
 ## Features
 
-If the pull request is not targetting the `main` branch,
+If the pull request is not targeting the `main` branch,
 
-* 🔖 Adds 'status: dependent' label to the pull request.
+* 🔖 Adds `status: dependent` label to the pull request.
 
     <img width="300" alt="label" src="https://user-images.githubusercontent.com/931655/130362351-651d99f7-b62e-4988-bfba-079cec720dd3.png">
 
-* ⏳ Sets pull request status as 'pending'.
+* ⏳ Sets pull request status as `pending`.
 
     <img width="800" alt="status" src="https://user-images.githubusercontent.com/931655/130361943-90114c4d-31a5-4c3a-8396-3b34ef2ab3cc.png">
 
