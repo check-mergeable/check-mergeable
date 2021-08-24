@@ -29,7 +29,7 @@ This app is not currently configurable. The values are hardcoded:
 
 ### Vercel
 
-This app is running on [vercel](https://vercel.com/) using [Serverless Functions](https://vercel.com/docs/serverless-functions/introduction).
+This app is running on [Vercel](https://vercel.com/) using [Serverless Functions](https://vercel.com/docs/serverless-functions/introduction).
 
 #### Environment Variables
 
