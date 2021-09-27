@@ -24,7 +24,7 @@ module.exports = (app) => {
 
 const getMergeable = ({ logger, pullRequest }) => {
   const targetBranch = pullRequest.base.ref
-  const labels = pullRequest.labels
+  const labels = pullRequest.labels.map(label => label.name)
   logger.info(`Target branch is ${targetBranch}.`)
 
   const isAllowedTargetBranch = (
