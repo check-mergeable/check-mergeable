@@ -4,7 +4,7 @@ Prevent from accidentally merging a pull request which depends on another pull r
 
 ## Features
 
-If the pull request is not targetting the `main` branch,
+If the pull request is not targeting the `main` branch,
 
 * 🔖 Adds 'status: dependent' label to the pull request.
 
@@ -24,6 +24,7 @@ This app is not currently configurable. The values are hardcoded:
 
 * Target branch allowlist: `main`, `develop`, `release/*`, `hotfix/*`
 * Custom labels: `status: dependent`
+* Custom labels to manually set pending state: `status: pending`, `status: in-progress`, `status: in-review*`
 
 ## Development
 
