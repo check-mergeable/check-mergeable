@@ -15,11 +15,11 @@ module.exports = (app) => {
       repo: context.payload.repository.name,
     }
     const pullRequest = context.payload.pull_request
-    const isMergeable = getMergeable({ logger, pullRequest })
+    const { isMergeable, isDependent } = getMergeable({ logger, pullRequest })
 
     await Promise.all([
       updateStatus({ octokit, logger, repository, pullRequest, isMergeable }),
-      updateLabel({ octokit, logger, repository, pullRequest, isMergeable }),
+      updateLabel({ octokit, logger, repository, pullRequest, isMergeable, isDependent }),
     ])
   })
 }
@@ -35,15 +35,15 @@ const getMergeable = ({ logger, pullRequest }) => {
     targetBranch.startsWith('release/') ||
     targetBranch.startsWith('hotfix/')
   )
-  const isMergeable = (
-    isAllowedTargetBranch &&
+  const hasPendingLabels = (
     !labels.includes('status: pending') &&
     !labels.includes('status: in-progress') &&
     labels.findIndex(label => label.startsWith('status: in-review')) === -1
   )
+  const isMergeable = isAllowedTargetBranch && hasPendingLabels
   logger.info(`This pull request is ${isMergeable ? '' : 'not '}mergeable.`)
 
-  return isMergeable
+  return { isMergeable, isDependent: !isAllowedTargetBranch, hasPendingLabels }
 }
 
 const updateStatus = async ({ octokit, logger, repository, pullRequest, isMergeable }) => {
@@ -64,9 +64,9 @@ const updateStatus = async ({ octokit, logger, repository, pullRequest, isMergea
   }
 }
 
-const updateLabel = async ({ isMergeable, ...params }) => {
+const updateLabel = async ({ isMergeable, isDependent, ...params }) => {
   const label = 'status: dependent'
-  if (!isMergeable) {
+  if (!isMergeable && isDependent) {
     await addLabel({ ...params, label })
   } else {
     await removeLabel({ ...params, label })
