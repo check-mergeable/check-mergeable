@@ -24,6 +24,7 @@ This app is not currently configurable. The values are hardcoded:
 
 * Target branch allowlist: `main`, `develop`, `release/*`, `hotfix/*`
 * Custom labels: `status: dependent`
+* Custom labels to manually set pending state: `status: pending`, `status: in-progress`, `status: in-review*`
 
 ## Development
 
