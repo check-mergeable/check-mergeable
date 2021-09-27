@@ -2,6 +2,8 @@ module.exports = (app) => {
   app.on([
     'pull_request.opened',
     'pull_request.edited',
+    'pull_request.labeled',
+    'pull_request.unlabeled',
     'pull_request.synchronize',
   ], async (context) => {
     const octokit = context.octokit
