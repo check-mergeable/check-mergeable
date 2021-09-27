@@ -27,13 +27,16 @@ const getMergeable = ({ logger, pullRequest }) => {
   const labels = pullRequest.labels
   logger.info(`Target branch is ${targetBranch}.`)
 
-  const isMergeable = (
+  const isAllowedTargetBranch = (
     targetBranch === 'main' ||
     targetBranch === 'develop' ||
     targetBranch.startsWith('release/') ||
-    targetBranch.startsWith('hotfix/') ||
-    !labels.includes('status: pending') ||
-    !labels.includes('status: in-progress') ||
+    targetBranch.startsWith('hotfix/')
+  )
+  const isMergeable = (
+    isAllowedTargetBranch &&
+    !labels.includes('status: pending') &&
+    !labels.includes('status: in-progress') &&
     labels.findIndex(label => label.startsWith('status: in-review')) === -1
   )
   logger.info(`This pull request is ${isMergeable ? '' : 'not '}mergeable.`)
