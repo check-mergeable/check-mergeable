@@ -38,13 +38,11 @@ This app is running on [Vercel](https://vercel.com/) using [Serverless Functions
 * `PRIVATE_KEY`
 * `WEBHOOK_SECRET`
 
-You'll be able to find the values in [check-mergeable app settings](https://github.com/organizations/pocketlesson/settings/apps/check-mergeable). (PocketLesson members only!)
-
 ### Useful Resources
 
 * [Probot](https://probot.github.io/)
 * [Probot - Deployment to Vercel](https://probot.github.io/docs/deployment/#vercel)
-* [check-mergeable-playground](https://github.com/pocketlesson/check-mergeable-playground)
+* [check-mergeable-playground](https://github.com/check-mergeable/check-mergeable-playground)
 
 ## License
 

@@ -5,7 +5,7 @@
   "description": "A Probot app",
   "author": "Suyeol Jeon <devxoul@gmail.com>",
   "license": "ISC",
-  "homepage": "https://github.com/pocketlesson/check-mergeable",
+  "homepage": "https://github.com/check-mergeable/check-mergeable",
   "keywords": [
     "probot",
     "github",
