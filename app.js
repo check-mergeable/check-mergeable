@@ -31,6 +31,7 @@ const getMergeable = ({ logger, pullRequest }) => {
 
   const isAllowedTargetBranch = (
     targetBranch === 'main' ||
+    targetBranch === 'master' ||
     targetBranch === 'develop' ||
     targetBranch.startsWith('release/') ||
     targetBranch.startsWith('hotfix/')
